@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>🎙️ ESL Pronunciation Lab + Final Dialogue Simulator</title>
+    <title>🎯 ESL Total Mastery: Significado + Pronunciación + Diálogo</title>
     <style>
         * {
             margin: 0;
@@ -20,10 +20,9 @@
             max-width: 1300px;
             margin: 0 auto;
         }
-        /* header */
         .header {
             text-align: center;
-            margin-bottom: 1.8rem;
+            margin-bottom: 1.5rem;
         }
         .header h1 {
             background: #FFB347;
@@ -36,20 +35,15 @@
         }
         .header p {
             color: #ffecb3;
-            margin-top: 0.6rem;
+            margin-top: 0.5rem;
             font-weight: bold;
         }
-        /* two columns: practice first, then simulation */
-        .phase-container {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-        /* practice card */
-        .practice-card {
+        /* cards */
+        .phase-card {
             background: #fffef5;
             border-radius: 56px;
             padding: 1.6rem;
+            margin-bottom: 2rem;
             box-shadow: 0 15px 25px rgba(0,0,0,0.2);
             border: 2px solid #ffcd94;
             transition: all 0.2s;
@@ -60,248 +54,384 @@
             display: inline-block;
             padding: 0.2rem 1.4rem;
             border-radius: 40px;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
             color: #c2571a;
+        }
+        .meaning-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .meaning-item {
+            background: #f9f2e0;
+            border-radius: 40px;
+            padding: 0.8rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .english-word {
+            font-weight: bold;
+            font-size: 1.2rem;
+            background: #ffefcf;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            min-width: 160px;
+        }
+        .spanish-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            flex: 2;
+        }
+        .spanish-btn {
+            background: #e6e9f0;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 60px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.05s linear;
+            font-size: 0.9rem;
+        }
+        .spanish-btn.selected-correct {
+            background: #4caf7f;
+            color: white;
+            box-shadow: 0 2px 6px green;
+        }
+        .spanish-btn.wrong-attempt {
+            background: #f08080;
+            color: white;
+            animation: shake 0.2s;
+        }
+        @keyframes shake {
+            0% { transform: translateX(0);}
+            25% { transform: translateX(-4px);}
+            75% { transform: translateX(4px);}
+            100% { transform: translateX(0);}
+        }
+        .meaning-feedback {
+            font-size: 0.85rem;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        .phase-status {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .unlock-badge {
+            background: #ffd966;
+            border-radius: 30px;
+            padding: 0.3rem 1rem;
+            display: inline-block;
+        }
+        .hidden {
+            display: none;
         }
         .phrase-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 0.8rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             justify-content: center;
         }
         .phrase-pill {
             background: #fff0cc;
-            padding: 0.6rem 1.2rem;
+            padding: 0.5rem 1.2rem;
             border-radius: 60px;
             font-weight: bold;
-            font-size: 1rem;
             cursor: pointer;
-            transition: 0.05s linear;
             border: 1px solid #ffb86b;
-            font-family: monospace;
         }
         .phrase-pill.practiced {
             background: #6fbf4c;
             color: white;
-            border-color: #3c8b2c;
             text-decoration: line-through;
-            opacity: 0.8;
         }
         .phrase-pill.active-practice {
             background: #ffaa44;
-            color: #2c2b26;
             transform: scale(1.02);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
         .practice-area {
             background: #f8f0e0;
             border-radius: 48px;
-            padding: 1.2rem;
+            padding: 1rem;
             margin-top: 0.5rem;
         }
         .target-badge {
             background: #1e3a4d;
             border-radius: 60px;
-            padding: 0.8rem;
+            padding: 0.7rem;
             text-align: center;
             color: #ffeaac;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: bold;
-            margin-bottom: 1rem;
-            word-break: break-word;
         }
         .mic-row {
             display: flex;
-            flex-wrap: wrap;
             gap: 1rem;
             justify-content: center;
             margin: 1rem 0;
+            flex-wrap: wrap;
         }
-        .mic-btn {
-            background: #f05a5a;
+        .mic-btn, .listen-btn {
             border: none;
-            font-size: 1.2rem;
-            padding: 0.8rem 1.6rem;
+            padding: 0.7rem 1.5rem;
             border-radius: 50px;
             font-weight: bold;
-            color: white;
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 1rem;
         }
-        .listen-btn {
-            background: #4c9f70;
-            border: none;
-            padding: 0.8rem 1.6rem;
-            border-radius: 50px;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-        }
+        .mic-btn { background: #f05a5a; color: white; }
+        .listen-btn { background: #4c9f70; color: white; }
         .feedback-text {
             background: #eef4fc;
             border-radius: 40px;
-            padding: 0.8rem;
-            margin-top: 1rem;
-            font-weight: bold;
+            padding: 0.7rem;
             text-align: center;
-        }
-        .progress-info {
-            margin-bottom: 0.8rem;
             font-weight: bold;
-            text-align: right;
-            font-size: 0.9rem;
         }
-        /* simulation card (hidden until all practiced) */
         .simulation-card {
             background: #fff4e8;
             border-radius: 56px;
             padding: 1.6rem;
-            box-shadow: 0 15px 25px rgba(0,0,0,0.2);
             border: 3px solid #ffaa55;
-            transition: 0.2s;
-        }
-        .hidden {
-            display: none;
         }
         .chat-sim {
             background: #f2e3ce;
             border-radius: 48px;
             padding: 1rem;
-            min-height: 260px;
-            max-height: 320px;
+            min-height: 240px;
+            max-height: 280px;
             overflow-y: auto;
             margin: 1rem 0;
         }
         .sim-message {
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.7rem;
             display: flex;
         }
-        .sim-user {
-            justify-content: flex-end;
-        }
-        .sim-bot {
-            justify-content: flex-start;
-        }
+        .sim-user { justify-content: flex-end; }
+        .sim-bot { justify-content: flex-start; }
         .sim-bubble {
             max-width: 80%;
-            padding: 0.6rem 1rem;
+            padding: 0.5rem 1rem;
             border-radius: 24px;
             font-weight: bold;
         }
-        .sim-user .sim-bubble {
-            background: #4c9f70;
-            color: white;
-        }
-        .sim-bot .sim-bubble {
-            background: #e9ecef;
-            color: #1e3a4d;
-            border-left: 4px solid #ffb347;
-        }
-        .sim-controls {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin: 1rem 0;
-        }
+        .sim-user .sim-bubble { background: #4c9f70; color: white; }
+        .sim-bot .sim-bubble { background: #e9ecef; color: #1e3a4d; border-left: 4px solid #ffb347; }
+        .sim-controls { display: flex; gap: 1rem; justify-content: center; margin: 1rem 0; flex-wrap: wrap; }
         .sim-btn {
             background: #ffc576;
             border: none;
-            font-size: 1.1rem;
-            padding: 0.6rem 1.5rem;
+            padding: 0.5rem 1.2rem;
             border-radius: 40px;
             font-weight: bold;
             cursor: pointer;
         }
-        .disabled-btn {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-        .reset-sim {
-            background: #b0c4de;
-        }
-        footer {
-            text-align: center;
-            margin-top: 1.8rem;
-            color: #ffddbb;
-        }
+        footer { text-align: center; margin-top: 1.5rem; color: #ffddbb; }
         @media (max-width: 650px) {
-            .target-badge { font-size: 1.1rem; }
+            .english-word { font-size: 0.9rem; min-width: 120px; }
+            .spanish-btn { font-size: 0.75rem; }
         }
     </style>
 </head>
 <body>
 <div class="app-container">
     <div class="header">
-        <h1>🗣️ Speak & Master 🗣️</h1>
-        <p>📢 Practice all expressions → Unlock the final dialogue simulation!</p>
+        <h1>🌟 3 STEPS TO FLUENCY 🌟</h1>
+        <p>📌 0. Significado en español → 1. Pronunciación → 2. Diálogo final</p>
     </div>
-    <div class="phase-container">
-        <!-- PRACTICE SECTION -->
-        <div class="practice-card" id="practiceCard">
-            <div class="section-title">📖 1. Practice all phrases</div>
-            <div class="phrase-grid" id="phraseGrid"></div>
-            <div class="progress-info" id="progressInfo">⭐ Practiced: 0 / 13 ⭐</div>
-            <div class="practice-area">
-                <div class="target-badge" id="targetPhraseDisplay">🔊 Select a phrase to practice</div>
-                <div class="mic-row">
-                    <button id="micPracticeBtn" class="mic-btn">🎤 Speak & Check</button>
-                    <button id="listenPracticeBtn" class="listen-btn">🔊 Listen to phrase</button>
-                </div>
-                <div id="practiceFeedback" class="feedback-text">✨ Tap a phrase, then click the microphone and say it clearly. Score 85%+ to mark as practiced!</div>
-            </div>
-        </div>
 
-        <!-- FINAL SIMULATION CARD (hidden until all phrases practiced) -->
-        <div class="simulation-card hidden" id="simulationCard">
-            <div class="section-title" style="background:#ffe0b5;">🎭 2. Final Dialogue Challenge 🎭</div>
-            <p style="margin-bottom:10px;">✅ You mastered all expressions! Now practice a real conversation. Choose who starts:</p>
-            <div class="sim-controls">
-                <button id="userStartSimBtn" class="sim-btn">🙋 I start the conversation</button>
-                <button id="systemStartSimBtn" class="sim-btn">🤖 System starts</button>
-                <button id="resetSimBtn" class="sim-btn reset-sim">🔄 Reset dialogue</button>
+    <!-- PARTE 0: APRENDER SIGNIFICADO (MATCHING ESPAÑOL) -->
+    <div class="phase-card" id="meaningCard">
+        <div class="section-title">📖 PARTE 0: ¿Qué significa? (Match each phrase)</div>
+        <div id="meaningContainer" class="meaning-grid"></div>
+        <div class="phase-status" id="meaningStatus">🔒 Completa todos los significados para desbloquear la práctica de pronunciación.</div>
+    </div>
+
+    <!-- PARTE 1: PRÁCTICA DE PRONUNCIACIÓN (se muestra solo cuando significado completo) -->
+    <div class="phase-card hidden" id="practiceCard">
+        <div class="section-title">🎙️ PARTE 1: Practica la pronunciación</div>
+        <div class="phrase-grid" id="phraseGrid"></div>
+        <div class="progress-info" id="progressInfo" style="text-align:right; font-weight:bold;">⭐ Practicadas: 0 / 13 ⭐</div>
+        <div class="practice-area">
+            <div class="target-badge" id="targetPhraseDisplay">🔊 Selecciona una frase</div>
+            <div class="mic-row">
+                <button id="micPracticeBtn" class="mic-btn">🎤 Habla y verifica</button>
+                <button id="listenPracticeBtn" class="listen-btn">🔊 Escuchar frase</button>
             </div>
-            <div class="chat-sim" id="simChatArea">
-                <div class="sim-message sim-bot">
-                    <div class="sim-bubble">✨ Ready for the dialogue! Click "I start" or "System starts" to begin.</div>
-                </div>
-            </div>
-            <div id="simFeedbackArea" class="feedback-text" style="background:#fff0d6;">🎙️ During the simulation, speak the expected phrase when it's your turn. Correct pronunciation advances the conversation!</div>
+            <div id="practiceFeedback" class="feedback-text">✨ Elige una frase, pulsa el micrófono y pronúnciala bien (≥85%) para marcarla.</div>
         </div>
     </div>
-    <footer>💡 Tip: Practice each expression at least once (score ≥85%). After all are green, the dialogue unlocks!</footer>
+
+    <!-- PARTE 2: DIÁLOGO FINAL (se muestra solo cuando todas las frases practicadas) -->
+    <div class="simulation-card hidden" id="simulationCard">
+        <div class="section-title" style="background:#ffe0b5;">🎭 PARTE 2: Diálogo interactivo</div>
+        <p>✅ ¡Ya dominas significado y pronunciación! Ahora usa las frases en una conversación real.</p>
+        <div class="sim-controls">
+            <button id="userStartSimBtn" class="sim-btn">🙋 Empiezo yo</button>
+            <button id="systemStartSimBtn" class="sim-btn">🤖 Empieza el sistema</button>
+            <button id="resetSimBtn" class="sim-btn">🔄 Reiniciar diálogo</button>
+        </div>
+        <div class="chat-sim" id="simChatArea">
+            <div class="sim-message sim-bot"><div class="sim-bubble">✨ Diálogo listo. Elige quién empieza.</div></div>
+        </div>
+        <div id="simFeedbackArea" class="feedback-text" style="background:#fff0d6;"></div>
+        <button id="simMicBtn" class="mic-btn" style="width:100%; margin-top:8px;">🎙️ Hablar mi turno (diálogo)</button>
+    </div>
+    <footer>💡 Parte 0: asocia cada frase con su significado. Luego practica la pronunciación. ¡Al final, el diálogo!</footer>
 </div>
 
 <script>
-    // ---------- EXACT PHRASES (13 items as requested) ----------
-    const ALL_PHRASES = [
+    // ---------- FRASES Y SIGNIFICADOS (ESPAÑOL) ----------
+    const phrasesList = [
         "Understand", "Do", "You", "I", "Spanish", "English", "No", "No, sir",
         "I understand English", "I understand Spanish", "Do you understand English?",
         "Do you understand Spanish?", "Excuse me"
     ];
 
-    // Track practiced status
-    let practicedStatus = new Array(ALL_PHRASES.length).fill(false);
-    let currentSelectedIndex = 0;          // index of phrase selected for practice
-    let allPracticedFlag = false;
+    const spanishMeanings = [
+        "Entender / Comprender", "Hacer (auxiliar) / ¿Acaso?", "Tú / Usted", "Yo",
+        "Español", "Inglés", "No", "No, señor",
+        "Entiendo inglés", "Entiendo español", "¿Entiendes inglés?",
+        "¿Entiendes español?", "Disculpe / Permiso"
+    ];
+
+    // Estado: significado completado (cada frase)
+    let meaningCompleted = new Array(phrasesList.length).fill(false);
+    // Estado: pronunciación practicada (se desbloquea después de significado)
+    let pronunciationPracticed = new Array(phrasesList.length).fill(false);
+    let allMeaningsDone = false;
+    let allPronunciationsDone = false;
+    
+    let currentSelectedIndex = 0; // para práctica de pronunciación
 
     // DOM elements
+    const meaningContainer = document.getElementById('meaningContainer');
+    const meaningStatus = document.getElementById('meaningStatus');
+    const practiceCard = document.getElementById('practiceCard');
+    const simulationCard = document.getElementById('simulationCard');
     const phraseGrid = document.getElementById('phraseGrid');
     const progressInfo = document.getElementById('progressInfo');
     const targetPhraseDisplay = document.getElementById('targetPhraseDisplay');
     const micPracticeBtn = document.getElementById('micPracticeBtn');
     const listenPracticeBtn = document.getElementById('listenPracticeBtn');
     const practiceFeedback = document.getElementById('practiceFeedback');
-    const simulationCard = document.getElementById('simulationCard');
     const simChatArea = document.getElementById('simChatArea');
     const simFeedbackArea = document.getElementById('simFeedbackArea');
     const userStartSimBtn = document.getElementById('userStartSimBtn');
     const systemStartSimBtn = document.getElementById('systemStartSimBtn');
     const resetSimBtn = document.getElementById('resetSimBtn');
+    const simMicBtn = document.getElementById('simMicBtn');
 
-    // -------------------- LEVENSHTEIN (pronunciation scoring) --------------------
+    // ---------- ACTUALIZAR DESBLOQUEO DE FASES ----------
+    function updateUnlockStatus() {
+        const allMeaning = meaningCompleted.every(v => v === true);
+        allMeaningsDone = allMeaning;
+        if (allMeaningsDone) {
+            meaningStatus.innerHTML = "✅ ¡Excelente! Ya conoces el significado. ¡Fase 1 desbloqueada! ✅";
+            practiceCard.classList.remove('hidden');
+        } else {
+            const count = meaningCompleted.filter(v=>v===true).length;
+            meaningStatus.innerHTML = `🔒 Significados completados: ${count}/${phrasesList.length}. Completa todos para practicar la pronunciación.`;
+            practiceCard.classList.add('hidden');
+            simulationCard.classList.add('hidden');
+            return;
+        }
+        // revisar si todas las pronunciaciones están hechas
+        const allPron = pronunciationPracticed.every(v => v === true);
+        allPronunciationsDone = allPron;
+        if (allPronunciationsDone && allMeaningsDone) {
+            simulationCard.classList.remove('hidden');
+        } else {
+            simulationCard.classList.add('hidden');
+        }
+        updateProgressAndGrid();
+    }
+
+    function updateProgressAndGrid() {
+        const practicedCount = pronunciationPracticed.filter(v => v === true).length;
+        if (progressInfo) progressInfo.innerText = `⭐ Pronunciación practicada: ${practicedCount} / ${phrasesList.length} ⭐`;
+        renderPhraseGrid();
+    }
+
+    // ---------- RENDERIZAR PARTE 0 (MEANING MATCH) ----------
+    function renderMeanings() {
+        meaningContainer.innerHTML = '';
+        for (let i = 0; i < phrasesList.length; i++) {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'meaning-item';
+            const englishSpan = document.createElement('div');
+            englishSpan.className = 'english-word';
+            englishSpan.textContent = phrasesList[i];
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'spanish-options';
+            // opciones: mostramos 3 opciones: la correcta + 2 random (sin repetir)
+            const correctMeaning = spanishMeanings[i];
+            let otherIndices = [];
+            for (let j = 0; j < spanishMeanings.length; j++) {
+                if (j !== i) otherIndices.push(j);
+            }
+            // shuffle para elegir 2 distintas
+            const shuffled = [...otherIndices];
+            for (let k = shuffled.length - 1; k > 0; k--) {
+                const rand = Math.floor(Math.random() * (k + 1));
+                [shuffled[k], shuffled[rand]] = [shuffled[rand], shuffled[k]];
+            }
+            const distractors = shuffled.slice(0,2).map(idx => spanishMeanings[idx]);
+            const choices = [correctMeaning, ...distractors];
+            for (let c = choices.length - 1; c > 0; c--) {
+                const rand = Math.floor(Math.random() * (c + 1));
+                [choices[c], choices[rand]] = [choices[rand], choices[c]];
+            }
+            choices.forEach(choice => {
+                const btn = document.createElement('button');
+                btn.className = 'spanish-btn';
+                btn.textContent = choice;
+                btn.addEventListener('click', () => {
+                    if (meaningCompleted[i]) return;
+                    if (choice === correctMeaning) {
+                        meaningCompleted[i] = true;
+                        btn.classList.add('selected-correct');
+                        // deshabilitar otros botones de este item
+                        const allBtns = optionsDiv.querySelectorAll('.spanish-btn');
+                        allBtns.forEach(b => b.disabled = true);
+                        const feedbackSpan = document.createElement('span');
+                        feedbackSpan.className = 'meaning-feedback';
+                        feedbackSpan.innerHTML = ' ✓';
+                        itemDiv.appendChild(feedbackSpan);
+                        updateUnlockStatus();
+                    } else {
+                        btn.classList.add('wrong-attempt');
+                        setTimeout(() => btn.classList.remove('wrong-attempt'), 400);
+                        const tempFeedback = document.createElement('span');
+                        tempFeedback.className = 'meaning-feedback';
+                        tempFeedback.innerHTML = ' ❌ incorrecto';
+                        tempFeedback.style.color = 'red';
+                        itemDiv.appendChild(tempFeedback);
+                        setTimeout(() => tempFeedback.remove(), 800);
+                    }
+                });
+                optionsDiv.appendChild(btn);
+            });
+            itemDiv.appendChild(englishSpan);
+            itemDiv.appendChild(optionsDiv);
+            if (meaningCompleted[i]) {
+                const allBtns = optionsDiv.querySelectorAll('.spanish-btn');
+                allBtns.forEach(b => b.disabled = true);
+                const correctBtn = Array.from(allBtns).find(btn => btn.textContent === correctMeaning);
+                if (correctBtn) correctBtn.classList.add('selected-correct');
+            }
+            meaningContainer.appendChild(itemDiv);
+        }
+    }
+
+    // ---------- PRONUNCIACIÓN (LEVENSHTEIN) ----------
     function levenshteinDistance(a, b) {
         const s = a.toLowerCase().trim().replace(/[?.!,]/g, '');
         const t = b.toLowerCase().trim().replace(/[?.!,]/g, '');
@@ -313,7 +443,7 @@
         for (let i = 1; i <= s.length; i++) {
             for (let j = 1; j <= t.length; j++) {
                 const cost = s[i-1] === t[j-1] ? 0 : 1;
-                matrix[i][j] = Math.min(matrix[i-1][j] + 1, matrix[i][j-1] + 1, matrix[i-1][j-1] + cost);
+                matrix[i][j] = Math.min(matrix[i-1][j]+1, matrix[i][j-1]+1, matrix[i-1][j-1]+cost);
             }
         }
         return matrix[s.length][t.length];
@@ -328,62 +458,47 @@
         if (maxLen === 0) return 0;
         let raw = (1 - distance / maxLen) * 100;
         raw = Math.min(100, Math.max(0, raw));
-        if (userNorm === targetNorm) return 100;
         return Math.floor(raw);
     }
 
-    // Speech synthesis
     function speakText(text, rate = 0.85) {
         if (!window.speechSynthesis) return;
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'en-US';
         utterance.rate = rate;
-        utterance.pitch = 1.0;
         window.speechSynthesis.speak(utterance);
     }
 
-    // Update progress bar & unlock simulation if all practiced
-    function updateProgressAndUnlock() {
-        const practicedCount = practicedStatus.filter(v => v === true).length;
-        progressInfo.innerText = `⭐ Practiced: ${practicedCount} / ${ALL_PHRASES.length} ⭐`;
-        if (practicedCount === ALL_PHRASES.length && !allPracticedFlag) {
-            allPracticedFlag = true;
-            simulationCard.classList.remove('hidden');
-            addSimMessage('system', '🎉 Congratulations! You mastered every expression. Now try the final dialogue!', false);
-            speakText("Great job! You unlocked the dialogue simulation.");
-        }
+    // marcar pronunciación como correcta
+    function markPronunciationAsPracticed(index) {
+        if (pronunciationPracticed[index]) return;
+        pronunciationPracticed[index] = true;
+        updateUnlockStatus();
     }
 
-    // Mark a phrase as practiced (if score high enough)
-    function markPhraseAsPracticed(index) {
-        if (practicedStatus[index]) return;
-        practicedStatus[index] = true;
-        updateProgressAndUnlock();
-        renderPhraseGrid(); // re-render to update colors
-    }
-
-    // render phrase pills
     function renderPhraseGrid() {
+        if (!phraseGrid) return;
         phraseGrid.innerHTML = '';
-        ALL_PHRASES.forEach((phrase, idx) => {
+        phrasesList.forEach((phrase, idx) => {
             const pill = document.createElement('div');
             pill.className = 'phrase-pill';
-            if (practicedStatus[idx]) pill.classList.add('practiced');
+            if (pronunciationPracticed[idx]) pill.classList.add('practiced');
             if (currentSelectedIndex === idx) pill.classList.add('active-practice');
             pill.textContent = phrase;
             pill.addEventListener('click', () => {
+                if (!allMeaningsDone) return;
                 currentSelectedIndex = idx;
                 renderPhraseGrid();
-                targetPhraseDisplay.innerHTML = `🎤 Current: "${ALL_PHRASES[idx]}"`;
-                practiceFeedback.innerHTML = `👉 Say: "${ALL_PHRASES[idx]}" and click the microphone. Score 85%+ to mark as done.`;
+                targetPhraseDisplay.innerHTML = `🎤 Frase seleccionada: "${phrasesList[idx]}"`;
+                practiceFeedback.innerHTML = `👉 Di: "${phrasesList[idx]}" y usa el micrófono. Nota mínima 85% para practicarla.`;
             });
             phraseGrid.appendChild(pill);
         });
-        targetPhraseDisplay.innerHTML = `🎤 Current: "${ALL_PHRASES[currentSelectedIndex]}"`;
+        if (allMeaningsDone) targetPhraseDisplay.innerHTML = `🎤 Frase: "${phrasesList[currentSelectedIndex]}"`;
     }
 
-    // ---------- PRACTICE VOICE RECOGNITION ----------
+    // reconocimiento de voz para práctica
     let recognition = null;
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -394,205 +509,175 @@
     }
 
     function startPracticeListening() {
+        if (!allMeaningsDone) {
+            practiceFeedback.innerHTML = "⚠️ Primero completa la Parte 0 (significados).";
+            return;
+        }
         if (!recognition) {
-            practiceFeedback.innerHTML = "❌ Speech recognition not supported. Use Chrome, Edge, or Safari.";
+            practiceFeedback.innerHTML = "❌ Navegador sin soporte de reconocimiento de voz. Usa Chrome/Edge.";
             return;
         }
         recognition.start();
-        micPracticeBtn.innerHTML = "🎤🔴 LISTENING...";
-        practiceFeedback.innerHTML = "👂 Listening... say the selected phrase clearly!";
+        micPracticeBtn.innerHTML = "🎤🔴 ESCUCHANDO...";
+        practiceFeedback.innerHTML = "Escuchando... di la frase claramente.";
     }
 
     if (recognition) {
         recognition.onresult = (event) => {
             const transcript = event.results[0][0].transcript;
-            micPracticeBtn.innerHTML = "🎤 Speak & Check";
-            const targetPhrase = ALL_PHRASES[currentSelectedIndex];
-            const score = getPronunciationScore(transcript, targetPhrase);
-            let feedbackMsg = `📝 You said: "${transcript}" → Score: ${score}% `;
+            micPracticeBtn.innerHTML = "🎤 Habla y verifica";
+            const target = phrasesList[currentSelectedIndex];
+            const score = getPronunciationScore(transcript, target);
+            let msg = `Dijiste: "${transcript}" → Puntuación: ${score}% `;
             if (score >= 85) {
-                feedbackMsg += " ✅ EXCELLENT! Phrase marked as practiced!";
-                if (!practicedStatus[currentSelectedIndex]) {
-                    markPhraseAsPracticed(currentSelectedIndex);
-                    speakText(`Good job! You mastered ${targetPhrase}`, 0.9);
+                msg += "✅ ¡Excelente pronunciación! Frase marcada como practicada.";
+                if (!pronunciationPracticed[currentSelectedIndex]) {
+                    markPronunciationAsPracticed(currentSelectedIndex);
+                    speakText(`Great! You mastered ${target}`, 0.9);
                 } else {
-                    feedbackMsg += " (already practiced, but great job!)";
-                    speakText(`Perfect pronunciation!`, 0.85);
+                    msg += " (ya estaba practicada, ¡genial!)";
                 }
             } else {
-                feedbackMsg += " ❌ Keep trying! Listen to the example and try again.";
-                speakText(`Try again. Say ${targetPhrase}`, 0.9);
+                msg += "❌ Sigue practicando. Escucha el ejemplo y vuelve a intentarlo.";
+                speakText(`Try again. Say ${target}`, 0.9);
             }
-            practiceFeedback.innerHTML = feedbackMsg;
+            practiceFeedback.innerHTML = msg;
         };
-        recognition.onerror = (err) => {
-            micPracticeBtn.innerHTML = "🎤 Speak & Check";
-            practiceFeedback.innerHTML = `⚠️ Recognition error: ${err.error}. Please try again.`;
+        recognition.onerror = () => {
+            micPracticeBtn.innerHTML = "🎤 Habla y verifica";
+            practiceFeedback.innerHTML = "Error de micrófono, inténtalo de nuevo.";
         };
         recognition.onend = () => {
-            micPracticeBtn.innerHTML = "🎤 Speak & Check";
+            micPracticeBtn.innerHTML = "🎤 Habla y verifica";
         };
     }
 
     micPracticeBtn.addEventListener('click', startPracticeListening);
     listenPracticeBtn.addEventListener('click', () => {
-        const phrase = ALL_PHRASES[currentSelectedIndex];
+        if (!allMeaningsDone) {
+            practiceFeedback.innerHTML = "Completa los significados primero.";
+            return;
+        }
+        const phrase = phrasesList[currentSelectedIndex];
         speakText(phrase, 0.85);
-        practiceFeedback.innerHTML = `🔊 Playing pronunciation: "${phrase}"`;
+        practiceFeedback.innerHTML = `🔊 Reproduciendo: "${phrase}"`;
     });
 
-    // -------------------- FINAL SIMULATION LOGIC (strict flow) --------------------
-    let simActive = false;
-    let simMode = null;      // 'user' or 'system'
-    let simStep = 0;
-    let waitingForUserTurn = false;
-    let currentExpectedUserPhrase = null;
+    // ---------- DIÁLOGO FINAL (simulación) ----------
+    let simActive = false, waitingForUser = false, currentExpected = null, activeSequence = [], simStep = 0, simMode = null;
 
-    // DIALOGUE SEQUENCE using exact expressions from the list, plus system responses that are natural but must include phrases from set or "yes?" and "Yes, I do, I understand English."
-    // According to request: user starts: "Excuse me, sir!" (we'll use "Excuse me" plus optional sir but we compare base phrase "Excuse me")
-    // System replies: "yes?" (audible)
-    // Then system shows text: "Do you understand English?" user pronounces -> if correct, system replies (audible) "Yes, I do, I understand English."
-    // Additional twist: we'll create both start modes with similar robust flow.
-    
-    // Mode: user starts dialogue
-    const userStartSequence = [
-        { speaker: 'user', phrase: 'Excuse me' },   // user must say Excuse me (acceptable to include 'sir' but base compare)
-        { speaker: 'system', phrase: 'yes?', isDynamic: true, audible: 'yes?' },
+    const userStartSeq = [
+        { speaker: 'user', phrase: 'Excuse me' },
+        { speaker: 'system', phrase: 'yes?', isDynamic: true },
         { speaker: 'system', phrase: 'Do you understand English?', displayAsQuestion: true },
         { speaker: 'user', phrase: 'I understand English' },
         { speaker: 'system', phrase: 'Yes, I do, I understand English.', audibleResponse: true }
     ];
-    
-    // Mode: system starts dialogue (system begins with "Excuse me", then user replies "Do you understand English?" etc)
-    const systemStartSequence = [
+    const systemStartSeq = [
         { speaker: 'system', phrase: 'Excuse me', audible: true },
         { speaker: 'user', phrase: 'Do you understand English?' },
         { speaker: 'system', phrase: 'Yes, I do, I understand English.', audibleResponse: true }
     ];
 
-    let activeSequence = [];
-
-    function addSimMessage(speaker, text, isUser = false) {
-        const msgDiv = document.createElement('div');
-        msgDiv.className = `sim-message ${speaker === 'user' ? 'sim-user' : 'sim-bot'}`;
+    function addSimMessage(speaker, text) {
+        const div = document.createElement('div');
+        div.className = `sim-message ${speaker === 'user' ? 'sim-user' : 'sim-bot'}`;
         const bubble = document.createElement('div');
         bubble.className = 'sim-bubble';
         bubble.innerText = text;
-        msgDiv.appendChild(bubble);
-        simChatArea.appendChild(msgDiv);
+        div.appendChild(bubble);
+        simChatArea.appendChild(div);
         simChatArea.scrollTop = simChatArea.scrollHeight;
     }
 
-    function resetSimulationUI() {
+    function resetSimUI() {
         simChatArea.innerHTML = '';
-        addSimMessage('system', '✨ Dialogue ready. Choose "I start" or "System starts" to begin.', false);
+        addSimMessage('system', '✨ Diálogo listo. Elige "Empiezo yo" o "Empieza el sistema".');
         simActive = false;
-        waitingForUserTurn = false;
-        currentExpectedUserPhrase = null;
-        simMode = null;
-        simStep = 0;
-        simFeedbackArea.innerHTML = '🎙️ During the simulation, speak the expected phrase when it\'s your turn. Correct pronunciation advances!';
+        waitingForUser = false;
+        currentExpected = null;
+        simFeedbackArea.innerHTML = '';
         userStartSimBtn.disabled = false;
         systemStartSimBtn.disabled = false;
-        resetSimBtn.disabled = false;
     }
 
-    // Process next step in simulation
     async function processSimStep() {
         if (!simActive) return;
         if (simStep >= activeSequence.length) {
-            // dialogue finished
-            addSimMessage('system', '🎉 Congratulations! You completed the dialogue perfectly! 🎉', false);
-            speakText("Fantastic! You completed the conversation.");
+            addSimMessage('system', '🎉 ¡Diálogo completado con éxito! 🎉');
+            speakText("Fantastic! You completed the dialogue.");
             simActive = false;
-            waitingForUserTurn = false;
-            simFeedbackArea.innerHTML = '✅ Dialogue finished! Press "Reset dialogue" to try again.';
+            waitingForUser = false;
+            simFeedbackArea.innerHTML = '✅ Diálogo finalizado. Usa "Reiniciar diálogo" para practicar de nuevo.';
             return;
         }
         const step = activeSequence[simStep];
         if (step.speaker === 'system') {
-            // System speaks
-            let displayText = step.phrase;
-            if (step.displayAsQuestion) displayText = step.phrase;
-            addSimMessage('system', displayText, false);
-            // audible response handling
-            if (step.audibleResponse) {
-                speakText(step.phrase, 0.9);
-            } else if (step.audible) {
+            let displayTxt = step.phrase;
+            addSimMessage('system', displayTxt);
+            if (step.audibleResponse || step.audible || step.phrase === 'yes?' || step.phrase === 'Do you understand English?' || step.phrase === 'Yes, I do, I understand English.') {
                 speakText(step.phrase, 0.85);
-            } else if (step.phrase === 'yes?') {
-                speakText('yes?', 0.85);
-            } else if (step.phrase === 'Do you understand English?') {
-                speakText('Do you understand English?', 0.85);
-            } else {
-                if (!step.audibleResponse) speakText(step.phrase, 0.85);
-            }
+            } else if (step.phrase === 'yes?') speakText('yes?', 0.85);
+            else speakText(step.phrase, 0.85);
             simStep++;
-            processSimStep(); // continue to next (might be user turn)
+            processSimStep();
         } else if (step.speaker === 'user') {
-            // Wait for user to speak
-            currentExpectedUserPhrase = step.phrase;
-            waitingForUserTurn = true;
-            simFeedbackArea.innerHTML = `🎙️ YOUR TURN: Please say exactly — "${currentExpectedUserPhrase}" — correctly (score ≥85%) to continue.`;
-            speakText(`Now it's your turn. Say ${currentExpectedUserPhrase}`, 0.9);
+            currentExpected = step.phrase;
+            waitingForUser = true;
+            simFeedbackArea.innerHTML = `🎙️ TU TURNO: Di exactamente: "${currentExpected}" (pronunciación correcta ≥85%)`;
+            speakText(`Now it's your turn. Say ${currentExpected}`, 0.9);
         }
     }
 
-    function handleSimUserSpeech(recognizedText) {
-        if (!simActive || !waitingForUserTurn) {
-            simFeedbackArea.innerHTML = "⏳ Not your turn yet, or simulation not active. Reset or start a new dialogue.";
-            return;
-        }
-        if (!currentExpectedUserPhrase) return;
-        const score = getPronunciationScore(recognizedText, currentExpectedUserPhrase);
-        if (score >= 85) {
-            // correct!
-            addSimMessage('user', recognizedText + " ✅", true);
-            simFeedbackArea.innerHTML = `✅ Perfect! (${score}%) Moving to next step.`;
-            speakText("Good job! Next.", 0.9);
-            waitingForUserTurn = false;
-            currentExpectedUserPhrase = null;
-            simStep++; // move past this user step
-            processSimStep(); // continue dialogue
-        } else {
-            addSimMessage('user', recognizedText + " ❌ (try again)", true);
-            simFeedbackArea.innerHTML = `❌ Pronunciation score ${score}%. Please say exactly: "${currentExpectedUserPhrase}". Listen to the phrase and try again.`;
-            speakText(`Try again. Say ${currentExpectedUserPhrase}`, 0.9);
-            // keep waitingForUserTurn = true, don't advance
-        }
-    }
-
-    // Initialize simulation mode
     function startSimulation(mode) {
-        if (!allPracticedFlag) {
-            simFeedbackArea.innerHTML = "⚠️ You must practice all phrases first to unlock the simulation!";
+        if (!allPronunciationsDone || !allMeaningsDone) {
+            simFeedbackArea.innerHTML = "❌ Debes completar TODAS las frases (significado + pronunciación) antes del diálogo.";
             return;
         }
-        resetSimulationUI();
+        resetSimUI();
         simActive = true;
         simMode = mode;
         simStep = 0;
-        waitingForUserTurn = false;
-        currentExpectedUserPhrase = null;
+        waitingForUser = false;
         if (mode === 'user') {
-            activeSequence = JSON.parse(JSON.stringify(userStartSequence));
-            addSimMessage('system', '🎬 You chose to start! Say: "Excuse me" to begin.', false);
-            speakText("You start. Say Excuse me.", 0.9);
-            simStep = 0; // first step is user: 'Excuse me'
-            currentExpectedUserPhrase = 'Excuse me';
-            waitingForUserTurn = true;
-            simFeedbackArea.innerHTML = `🎙️ YOUR TURN: Say "Excuse me" clearly (score ≥85%) to start.`;
-        } else {
-            activeSequence = JSON.parse(JSON.stringify(systemStartSequence));
-            addSimMessage('system', '🤖 System starts the conversation.', false);
+            activeSequence = JSON.parse(JSON.stringify(userStartSeq));
+            addSimMessage('system', '🎬 Elegiste empezar TÚ. Di: "Excuse me" para comenzar.');
             simStep = 0;
-            processSimStep(); // system will speak first (Excuse me, then user turn)
+            currentExpected = 'Excuse me';
+            waitingForUser = true;
+            simFeedbackArea.innerHTML = `🎙️ Di: "Excuse me" correctamente.`;
+            speakText("You start. Say Excuse me.", 0.9);
+        } else {
+            activeSequence = JSON.parse(JSON.stringify(systemStartSeq));
+            addSimMessage('system', '🤖 El sistema empieza la conversación.');
+            simStep = 0;
+            processSimStep();
         }
         userStartSimBtn.disabled = true;
         systemStartSimBtn.disabled = true;
     }
 
-    // Attach sim voice recognition
+    function handleSimUserSpeech(recognizedText) {
+        if (!simActive || !waitingForUser || !currentExpected) {
+            simFeedbackArea.innerHTML = "⏳ No es tu turno o el diálogo no está activo. Reinicia.";
+            return;
+        }
+        const score = getPronunciationScore(recognizedText, currentExpected);
+        if (score >= 85) {
+            addSimMessage('user', recognizedText + " ✅");
+            simFeedbackArea.innerHTML = `✅ Perfecto (${score}%). ¡Avanzamos!`;
+            speakText("Good job! Next.", 0.9);
+            waitingForUser = false;
+            currentExpected = null;
+            simStep++;
+            processSimStep();
+        } else {
+            addSimMessage('user', recognizedText + " ❌ (intenta de nuevo)");
+            simFeedbackArea.innerHTML = `❌ Puntuación ${score}%. Di exactamente: "${currentExpected}". Escucha el ejemplo.`;
+            speakText(`Try again. Say ${currentExpected}`, 0.9);
+        }
+    }
+
     let simRecognition = null;
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
         const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -600,53 +685,31 @@
         simRecognition.continuous = false;
         simRecognition.interimResults = false;
         simRecognition.lang = 'en-US';
-        simRecognition.onresult = (event) => {
-            const transcript = event.results[0][0].transcript;
-            handleSimUserSpeech(transcript);
-        };
-        simRecognition.onerror = (err) => {
-            simFeedbackArea.innerHTML = `🎤 Recognition error: ${err.error}. Please try speaking again.`;
-        };
+        simRecognition.onresult = (e) => handleSimUserSpeech(e.results[0][0].transcript);
+        simRecognition.onerror = () => simFeedbackArea.innerHTML = "Error de voz. Intenta otra vez.";
     }
 
     function startSimListening() {
-        if (!simRecognition) {
-            simFeedbackArea.innerHTML = "❌ Speech recognition not supported for simulation.";
+        if (!simActive || !waitingForUser) {
+            simFeedbackArea.innerHTML = "No es tu turno o diálogo inactivo. Reinicia el diálogo.";
             return;
         }
-        if (!simActive || !waitingForUserTurn) {
-            simFeedbackArea.innerHTML = "⚠️ It's not your turn or simulation not active. Reset and start correctly.";
-            return;
-        }
+        if (!simRecognition) { simFeedbackArea.innerHTML = "Reconocimiento no soportado."; return; }
         simRecognition.start();
-        simFeedbackArea.innerHTML = "🔴 Listening... say the required phrase.";
+        simFeedbackArea.innerHTML = "🔴 Escuchando... di la frase requerida.";
     }
 
-    // Buttons for simulation
     userStartSimBtn.addEventListener('click', () => startSimulation('user'));
     systemStartSimBtn.addEventListener('click', () => startSimulation('system'));
-    resetSimBtn.addEventListener('click', () => {
-        if (simRecognition && simRecognition.stop) simRecognition.stop();
-        resetSimulationUI();
-        simActive = false;
-        waitingForUserTurn = false;
-        userStartSimBtn.disabled = false;
-        systemStartSimBtn.disabled = false;
-    });
-    // Add a mic button inside simulation area for easier speaking
-    const simMicBtn = document.createElement('button');
-    simMicBtn.className = 'mic-btn';
-    simMicBtn.innerHTML = '🎙️ Speak your turn';
-    simMicBtn.style.marginTop = '10px';
-    simMicBtn.style.width = '100%';
+    resetSimBtn.addEventListener('click', () => { resetSimUI(); simActive=false; waitingForUser=false; userStartSimBtn.disabled=false; systemStartSimBtn.disabled=false; });
     simMicBtn.addEventListener('click', startSimListening);
-    document.querySelector('#simulationCard .feedback-text').after(simMicBtn);
 
-    // initial rendering
+    // inicialización
+    renderMeanings();
+    updateUnlockStatus();
+    currentSelectedIndex = 0;
     renderPhraseGrid();
-    updateProgressAndUnlock();
-    targetPhraseDisplay.innerHTML = `🎤 Current: "${ALL_PHRASES[0]}"`;
-    practiceFeedback.innerHTML = `👉 Select any phrase and click the microphone. Score 85%+ to mark as done.`;
+    targetPhraseDisplay.innerHTML = `🎤 Selecciona una frase`;
 </script>
 </body>
 </html>
